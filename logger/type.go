@@ -3,6 +3,6 @@ package logger
 type Type string
 
 const (
-	Default Type = "default"
-	ZAP     Type = "zap"
+	Standard Type = "standard"
+	ZAP      Type = "zap"
 )
