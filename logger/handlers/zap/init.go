@@ -1,7 +1,6 @@
 package zap
 
 import (
-	"fmt"
 	"log/slog"
 
 	"github.com/dhanar-kusuma/go-spark/environment"
@@ -16,7 +15,6 @@ func Init(appName string, env environment.Type, opts ...any) (slog.Handler, hand
 	var zapOpts []zapPkg.Option
 
 	if len(opts) > 0 {
-		fmt.Println("called")
 		for _, v := range opts {
 			if opt, ok := v.(zapPkg.Option); ok {
 				zapOpts = append(zapOpts, opt)
