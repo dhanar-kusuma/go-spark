@@ -5,10 +5,10 @@ import (
 	"os"
 
 	"github.com/dhanar-kusuma/go-spark/environment"
-	"github.com/dhanar-kusuma/go-spark/logger/shared"
+	"github.com/dhanar-kusuma/go-spark/logger/handlers"
 )
 
-func Init(appName string, env environment.Type, opts ...any) (slog.Handler, shared.Flush, error) {
+func Init(appName string, env environment.Type, opts ...any) (slog.Handler, handlers.Flush, error) {
 	var slogHandlerOpts *slog.HandlerOptions
 	var handler slog.Handler
 
@@ -25,5 +25,5 @@ func Init(appName string, env environment.Type, opts ...any) (slog.Handler, shar
 		handler = slog.NewTextHandler(os.Stdout, slogHandlerOpts)
 	}
 
-	return handler, shared.Void, nil
+	return handler, handlers.Void, nil
 }

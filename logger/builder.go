@@ -4,12 +4,12 @@ import (
 	"log/slog"
 
 	"github.com/dhanar-kusuma/go-spark/environment"
-	"github.com/dhanar-kusuma/go-spark/logger/shared"
-	"github.com/dhanar-kusuma/go-spark/logger/standard"
-	"github.com/dhanar-kusuma/go-spark/logger/zap"
+	"github.com/dhanar-kusuma/go-spark/logger/handlers"
+	"github.com/dhanar-kusuma/go-spark/logger/handlers/standard"
+	"github.com/dhanar-kusuma/go-spark/logger/handlers/zap"
 )
 
-var factories = map[Type]shared.LoggerFactory{
+var factories = map[Type]handlers.Factory{
 	Standard: standard.Init,
 	ZAP:      zap.Init,
 }
@@ -43,12 +43,12 @@ func (b *Builder) SetOptions(opts ...any) *Builder {
 	return b
 }
 
-func (b *Builder) Build(appName string) (*slog.Logger, shared.Flush, error) {
+func (b *Builder) Build(appName string) (*slog.Logger, handlers.Flush, error) {
 	factory, found := factories[b.loggerType]
 	if !found {
 		return nil, nil, ErrUnsupportedLoggerType
 	}
-	handler, flush, err := factory(appName, b.env, b.options)
+	handler, flush, err := factory(appName, b.env, b.options...)
 	if err != nil {
 		return nil, nil, err
 	}

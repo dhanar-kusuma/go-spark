@@ -1,20 +1,22 @@
 package zap
 
 import (
+	"fmt"
 	"log/slog"
 
 	"github.com/dhanar-kusuma/go-spark/environment"
-	"github.com/dhanar-kusuma/go-spark/logger/shared"
+	"github.com/dhanar-kusuma/go-spark/logger/handlers"
 	zapPkg "go.uber.org/zap"
 	"go.uber.org/zap/exp/zapslog"
 )
 
-func Init(appName string, env environment.Type, opts ...any) (slog.Handler, shared.Flush, error) {
+func Init(appName string, env environment.Type, opts ...any) (slog.Handler, handlers.Flush, error) {
 	var zapLogger *zapPkg.Logger
 	var err error
 	var zapOpts []zapPkg.Option
 
 	if len(opts) > 0 {
+		fmt.Println("called")
 		for _, v := range opts {
 			if opt, ok := v.(zapPkg.Option); ok {
 				zapOpts = append(zapOpts, opt)
