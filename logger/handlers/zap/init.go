@@ -33,6 +33,9 @@ func Init(appName string, env environment.Type, opts ...any) (slog.Handler, hand
 		return nil, nil, err
 	}
 
-	slogHandler := zapslog.NewHandler(zapLogger.Core())
+	slogHandler := zapslog.NewHandler(zapLogger.Core().With([]zapPkg.Field{
+		zapPkg.String(handlers.LogAppName, appName),
+		zapPkg.String(handlers.LogEnv, env.String()),
+	}))
 	return slogHandler, zapLogger.Sync, nil
 }

@@ -25,5 +25,8 @@ func Init(appName string, env environment.Type, opts ...any) (slog.Handler, hand
 		handler = slog.NewTextHandler(os.Stdout, slogHandlerOpts)
 	}
 
-	return handler, handlers.Void, nil
+	return handler.WithAttrs([]slog.Attr{
+		{Key: handlers.LogAppName, Value: slog.StringValue(appName)},
+		{Key: handlers.LogEnv, Value: slog.StringValue(env.String())},
+	}), handlers.Void, nil
 }
